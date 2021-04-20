@@ -80,7 +80,6 @@ clean:
 	rm -f *.tex *.dvi *.idx *.aux *.log *.ind *.ilg \
 	*.o *.d *.asm *.sym bootblock entryother \
 	initcode initcode.out kernel xv6.img \
-	.gdbinit \
 	$(UPROGS)
 
 # run in emulators
@@ -109,16 +108,13 @@ qemu-4cpu: xv6.img
 qemu-nox: xv6.img
 	$(QEMU) -nographic $(QEMUOPTS)
 
-.gdbinit: .gdbinit.tmpl
-	sed "s/localhost:1234/localhost:$(GDBPORT)/" < $^ > $@
-
 qemu-gdb: xv6.img .gdbinit
 	@echo "*** Now run 'gdb'." 1>&2
-	$(QEMU) -serial mon:stdio $(QEMUOPTS) -S $(QEMUGDB)
+	$(QEMU) -serial mon:stdio $(QEMUOPTS) -S -gdb tcp::26000
 
 qemu-nox-gdb: xv6.img .gdbinit
 	@echo "*** Now run 'gdb'." 1>&2
-	$(QEMU) -nographic $(QEMUOPTS) -S $(QEMUGDB)
+	$(QEMU) -nographic $(QEMUOPTS) -S -gdb tcp::26000
 
 # CUT HERE
 # prepare dist for students
@@ -131,7 +127,7 @@ EXTRA=\
 	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c zombie.c\
 	printf.c umalloc.c\
 	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
-	.gdbinit.tmpl gdbutil\
+	.gdbinit.tmpl
 
 dist:
 	rm -rf dist
