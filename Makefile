@@ -80,7 +80,6 @@ clean:
 	rm -f *.tex *.dvi *.idx *.aux *.log *.ind *.ilg \
 	*.o *.d *.asm *.sym bootblock entryother \
 	initcode initcode.out kernel xv6.img \
-	$(UPROGS)
 
 # run in emulators
 
