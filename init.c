@@ -7,7 +7,11 @@ mymain(void)
 {
 	fork();
 	fork();
-	for(;;)
-		print("process %d run from cpu %d!\n");
+	int i = 0;
+	for(;;){
+		if(i%5000000==0)
+			print("process %d run from cpu %d!\n");
+		i=(i+1)%5000000;
+	}
 //	fork();
 }
