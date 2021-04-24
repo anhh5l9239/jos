@@ -43,3 +43,15 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int
+sys_print(void)
+{
+	char *str;
+	if(argstr(0, &str) < 0)
+		return -1;
+
+	cprintf(str, cpu->id, proc->pid);
+	return 0;
+}
+

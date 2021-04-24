@@ -115,38 +115,3 @@ qemu-nox-gdb: xv6.img .gdbinit
 	@echo "*** Now run 'gdb'." 1>&2
 	$(QEMU) -nographic $(QEMUOPTS) -S -gdb tcp::26000
 
-# CUT HERE
-# prepare dist for students
-# after running make dist, probably want to
-# rename it to rev0 or rev1 or so on and then
-# check in that version.
-
-EXTRA=\
-	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\
-	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c zombie.c\
-	printf.c umalloc.c\
-	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
-
-dist:
-	rm -rf dist
-	mkdir dist
-	for i in $(FILES); \
-	do \
-		grep -v PAGEBREAK $$i >dist/$$i; \
-	done
-	sed '/CUT HERE/,$$d' Makefile >dist/Makefile
-	echo >dist/runoff.spec
-	cp $(EXTRA) dist
-
-dist-test:
-	rm -rf dist
-	make dist
-	rm -rf dist-test
-	mkdir dist-test
-	cp dist/* dist-test
-	cd dist-test; $(MAKE) print
-	cd dist-test; $(MAKE) bochs || true
-	cd dist-test; $(MAKE) qemu
-
-
-.PHONY: dist-test dist

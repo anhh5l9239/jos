@@ -53,13 +53,13 @@ trap(struct trapframe *tf)
       ticks++;
       release(&tickslock);
     }
-    if(proc){
+    /*if(proc){
     	proc->pticks++;
     	if(proc->pticks%20==0){
     		cprintf("cpu=%d,pid=%d,pticks=%d,timer interrupt!\n",
     				cpu->id,proc->pid,proc->pticks);
     	}
-    }
+    }*/
     lapiceoi();
     break;
   case T_IRQ0 + IRQ_COM1:

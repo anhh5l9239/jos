@@ -98,18 +98,6 @@ lapicinit(void)
 int
 cpunum(void)
 {
-  // Cannot call cpu when interrupts are enabled:
-  // result not guaranteed to last long enough to be used!
-  // Would prefer to panic but even printing is chancy here:
-  // almost everything, including cprintf and panic, calls cpu,
-  // often indirectly through acquire and release.
-  if(readeflags()&FL_IF){
-    static int n;
-    if(n++ == 0)
-      cprintf("cpu called from %x with interrupts enabled\n",
-        __builtin_return_address(0));
-  }
-
   if(lapic)
     return lapic[ID]>>24;
   return 0;
@@ -121,13 +109,6 @@ lapiceoi(void)
 {
   if(lapic)
     lapicw(EOI, 0);
-}
-
-// Spin for a given number of microseconds.
-// On real hardware would want to tune this dynamically.
-void
-microdelay(int us)
-{
 }
 
 #define IO_RTC  0x70
@@ -153,9 +134,7 @@ lapicstartap(uchar apicid, uint addr)
   // Send INIT (level-triggered) interrupt to reset other CPU.
   lapicw(ICRHI, apicid<<24);
   lapicw(ICRLO, INIT | LEVEL | ASSERT);
-  microdelay(200);
   lapicw(ICRLO, INIT | LEVEL);
-  microdelay(100);    // should be 10ms, but too slow in Bochs!
   
   // Send startup IPI (twice!) to enter code.
   // Regular hardware is supposed to only accept a STARTUP
@@ -165,7 +144,6 @@ lapicstartap(uchar apicid, uint addr)
   for(i = 0; i < 2; i++){
     lapicw(ICRHI, apicid<<24);
     lapicw(ICRLO, STARTUP | (addr>>12));
-    microdelay(200);
   }
 }
 

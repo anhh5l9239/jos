@@ -7,4 +7,7 @@ mymain(void)
 {
 	fork();
 	fork();
+	for(;;)
+		print("process %d run from cpu %d!\n");
+//	fork();
 }
