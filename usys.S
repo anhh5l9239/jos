@@ -10,7 +10,6 @@
 
 SYSCALL(fork)
 SYSCALL(exit)
-SYSCALL(wait)
 SYSCALL(getpid)
 SYSCALL(uptime)
 SYSCALL(print)

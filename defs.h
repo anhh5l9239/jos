@@ -43,7 +43,6 @@ void            mpstartthem(void);
 void            picenable(int);
 void            picinit(void);
 
-//PAGEBREAK: 16
 // proc.c
 struct proc*    copyproc(struct proc*);
 void            exit(void);

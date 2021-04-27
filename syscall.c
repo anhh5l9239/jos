@@ -80,15 +80,12 @@ argstr(int n, char **pp)
 extern int sys_exit(void);
 extern int sys_fork(void);
 extern int sys_getpid(void);
-extern int sys_wait(void);
-extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_print(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]     sys_fork,
 [SYS_exit]     sys_exit,
-[SYS_wait]     sys_wait,
 [SYS_getpid]   sys_getpid,
 [SYS_uptime]   sys_uptime,
 [SYS_print]    sys_print,

@@ -28,10 +28,6 @@ main(void)
   uartinit();      // serial port
   pinit();         // process table
   tvinit();        // trap vectors
-//  binit();         // buffer cache
-//  fileinit();      // file table
-//  iinit();         // inode cache
-//  ideinit();       // disk
   if(!ismp)
     timerinit();   // uniprocessor timer
   startothers();   // start other processors
@@ -109,10 +105,3 @@ pde_t entrypgdir[NPDENTRIES] = {
   // Map VA's [KERNBASE, KERNBASE+4MB) to PA's [0, 4MB)
   [KERNBASE>>PDXSHIFT] = (0) | PTE_P | PTE_W | PTE_PS,
 };
-
-//PAGEBREAK!
-// Blank page.
-//PAGEBREAK!
-// Blank page.
-//PAGEBREAK!
-// Blank page.

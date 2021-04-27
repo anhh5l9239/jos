@@ -145,12 +145,6 @@ void
 exit(void)
 {}
 
-// Wait for a child process to exit and return its pid.
-// Return -1 if this process has no children.
-int
-wait(void)
-{return 0;}
-
 //PAGEBREAK: 42
 // Per-CPU process scheduler.
 // Each CPU calls scheduler() after setting itself up.

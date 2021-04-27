@@ -20,12 +20,6 @@ sys_exit(void)
 }
 
 int
-sys_wait(void)
-{
-  return wait();
-}
-
-int
 sys_getpid(void)
 {
   return proc->pid;
@@ -51,7 +45,7 @@ sys_print(void)
 	if(argstr(0, &str) < 0)
 		return -1;
 
-	cprintf(str, cpu->id, proc->pid);
+	cprintf(str, proc->pid, cpu->id);
 	return 0;
 }
 
