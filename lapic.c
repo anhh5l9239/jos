@@ -47,7 +47,6 @@ lapicw(int index, int value)
   lapic[index] = value;
   lapic[ID];  // wait for write to finish, by reading
 }
-//PAGEBREAK!
 
 void
 lapicinit(void)
