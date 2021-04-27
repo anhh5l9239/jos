@@ -13,5 +13,4 @@ mymain(void)
 			print("process %d run from cpu %d!\n");
 		i=(i+1)%5000000;
 	}
-//	fork();
 }

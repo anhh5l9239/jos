@@ -1,19 +1,3 @@
-# Multiboot header, for multiboot boot loaders like GNU Grub.
-# http://www.gnu.org/software/grub/manual/multiboot/multiboot.html
-#
-# Using GRUB 2, you can boot xv6 from a file stored in a
-# Linux file system by copying kernel or kernelmemfs to /boot
-# and then adding this menu entry:
-#
-# menuentry "xv6" {
-# 	insmod ext2
-# 	set root='(hd0,msdos1)'
-# 	set kernel='/boot/kernel'
-# 	echo "Loading ${kernel}..."
-# 	multiboot ${kernel} ${kernel}
-# 	boot
-# }
-
 #include "asm.h"
 #include "memlayout.h"
 #include "mmu.h"
