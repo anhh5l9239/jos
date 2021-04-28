@@ -34,7 +34,6 @@ void            lapicstartap(uchar, uint);
 void            microdelay(int);
 
 // mp.c
-extern int      ismp;
 int             mpbcpu(void);
 void            mpinit(void);
 void            mpstartthem(void);

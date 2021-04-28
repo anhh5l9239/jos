@@ -12,7 +12,6 @@
 #include "proc.h"
 
 struct cpu cpus[NCPU];
-int ismp;
 int ncpu;
 uchar ioapicid;
 
@@ -95,21 +94,14 @@ mpinit(void)
   uchar *p, *e;
   struct mp *mp;
   struct mpconf *conf;
-  struct mpproc *proc;
   struct mpioapic *ioapic;
 
   if((conf = mpconfig(&mp)) == 0)
     return;
-  ismp = 1;
   lapic = (uint*)conf->lapicaddr;
   for(p=(uchar*)(conf+1), e=(uchar*)conf+conf->length; p<e; ){
     switch(*p){
     case MPPROC:
-      proc = (struct mpproc*)p;
-      if(ncpu != proc->apicid){
-        cprintf("mpinit: ncpu=%d apicid=%d\n", ncpu, proc->apicid);
-        ismp = 0;
-      }
       cpus[ncpu].id = ncpu;
       ncpu++;
       p += sizeof(struct mpproc);
@@ -126,15 +118,7 @@ mpinit(void)
       continue;
     default:
       cprintf("mpinit: unknown config type %x\n", *p);
-      ismp = 0;
     }
-  }
-  if(!ismp){
-    // Didn't like what we found; fall back to no MP.
-    ncpu = 1;
-    lapic = 0;
-    ioapicid = 0;
-    return;
   }
 
   if(mp->imcrp){
