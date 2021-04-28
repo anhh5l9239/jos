@@ -22,14 +22,11 @@ main(void)
   mpinit();        // collect info about this machine
   lapicinit();
   seginit();       // set up segments
-  cprintf("\ncpu%d: starting xv6\n\n", cpu->id);
   ioapicinit();    // another interrupt controller
-//  consoleinit();   // I/O devices & their interrupts
   uartinit();      // serial port
+  cprintf("\ncpu%d: starting xv6\n\n", cpu->id);
   pinit();         // process table
   tvinit();        // trap vectors
-  if(!ismp)
-    timerinit();   // uniprocessor timer
   startothers();   // start other processors
   kinit2(P2V(4*1024*1024), P2V(PHYSTOP)); // must come after startothers()
   userinit();      // first user process
